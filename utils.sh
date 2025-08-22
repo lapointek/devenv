@@ -6,7 +6,6 @@ is_installed(){
 
 is_group_installed(){
     pacman -Qg "$1" &> /dev/null
-
 }
 
 install_packages(){

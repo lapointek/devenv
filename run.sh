@@ -17,13 +17,13 @@ source packages.conf
 
 # Update system
 echo "Updating System..."
-sudo pacman -Syu --noconfirm
+sudo pacman -Syu
 
 
 # Install paru AUR helper
 if ! command -V paru &> /dev/null; then
     echo "Installing paru AUR helper..."
-    sudo pacman -S --needed git base-devel --noconfirm
+    sudo pacman -S --needed git base-devel
     if [[ ! -d "paru" ]]; then
         echo "Cloning paru repo..."
     else
@@ -33,7 +33,7 @@ if ! command -V paru &> /dev/null; then
     git clone https://aur.archlinux.org/paru.git
     cd paru
     echo "building paru..."
-    makepkg -si --noconfirm
+    makepkg -si
     cd ..
     rm -rf paru
 else
@@ -87,5 +87,3 @@ xdg-user-dirs-update
 # Retrieve latest mirror list
 echo "Retrieving latest mirror list..."
 sudo reflector --country "Canada,United States" --protocol https --score 50 --fastest 10 --sort rate --save /etc/pacman.d/mirrorlist
-
-echo "Please reboot the computer"
