@@ -14,16 +14,14 @@ if [ ! -f "packages.conf" ]; then
 fi
 source packages.conf
 
-
 # Update system
 echo "Updating System..."
 sudo pacman -Syu
 
-
 # Install paru AUR helper
 if ! command -V paru &> /dev/null; then
     echo "Installing paru AUR helper..."
-    sudo pacman -S --needed git base-devel
+    sudo pacman -S --needed git base-devel --noconfirm
     if [[ ! -d "paru" ]]; then
         echo "Cloning paru repo..."
     else
@@ -40,11 +38,7 @@ else
     echo "paru is already installed"
 fi
 
-
 # Install system packages
-echo "Installing core system packages..."
-install_packages "${SYSTEM_CORE[@]}"
-
 echo "Installing system utilities..."
 install_packages "${SYSTEM_UTILS[@]}"
 
@@ -66,7 +60,6 @@ install_packages "${MEDIA[@]}"
 echo "Installing fonts..."
 install_packages "${FONTS[@]}"
 
-
 # Start and enable system services
 echo "Configuring services..."
 for service in "${SERVICES[@]}"; do
@@ -78,11 +71,9 @@ for service in "${SERVICES[@]}"; do
     fi
 done
 
-
 # Update user directories
 echo "Updating user directories..."
 xdg-user-dirs-update
-
 
 # Retrieve latest mirror list
 echo "Retrieving latest mirror list..."

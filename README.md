@@ -1,6 +1,6 @@
 # Development Environment Setup
 
-The script automates the setup of my personal development environment on Arch Linux. It installs system utilities, the Sway window manager, development tools, and configures services.
+The script automates the setup of my personal development environment on Arch Linux. It installs system utilities, development tools, and configures services.
 
 ## Features
 
@@ -9,12 +9,11 @@ The script automates the setup of my personal development environment on Arch Li
 - Installation of the Paru AUR helper
 - Update of user directories and mirror list
 - Package installation:
-  - Core system packages
   - System utilities
   - Desktop applications
   - Development utilities
   - Fonts
-  - Media packages
+  - Media application
   - Office application
 
 ## Requirements

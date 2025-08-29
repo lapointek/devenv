@@ -20,6 +20,6 @@ install_packages(){
 
     if [ ${#to_install[@]} -ne 0 ]; then
         echo "Installing: ${to_install[*]}"
-        sudo pacman -S "${to_install[@]}"
+        sudo pacman -S --noconfirm "${to_install[@]}"
     fi
 }
