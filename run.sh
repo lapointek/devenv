@@ -9,8 +9,8 @@ echo "Starting full system setup..."
 
 # Check if packages.conf exist
 if [ ! -f "packages.conf" ]; then
-    echo "Error: packages.conf not found!"
-    exit 1
+  echo "Error: packages.conf not found!"
+  exit 1
 fi
 source packages.conf
 
@@ -19,23 +19,23 @@ echo "Updating System..."
 sudo pacman -Syu
 
 # Install paru AUR helper
-if ! command -V paru &> /dev/null; then
-    echo "Installing paru AUR helper..."
-    sudo pacman -S --needed git base-devel --noconfirm
-    if [[ ! -d "paru" ]]; then
-        echo "Cloning paru repo..."
-    else
-        echo "paru directory already exists, removing it..."
-        rm -rf paru
-    fi
-    git clone https://aur.archlinux.org/paru.git
-    cd paru
-    echo "building paru..."
-    makepkg -si
-    cd ..
+if ! command -V paru &>/dev/null; then
+  echo "Installing paru AUR helper..."
+  sudo pacman -S --needed git base-devel --noconfirm
+  if [[ ! -d "paru" ]]; then
+    echo "Cloning paru repo..."
+  else
+    echo "paru directory already exists, removing it..."
     rm -rf paru
+  fi
+  git clone https://aur.archlinux.org/paru.git
+  cd paru
+  echo "building paru..."
+  makepkg -si
+  cd ..
+  rm -rf paru
 else
-    echo "paru is already installed"
+  echo "paru is already installed"
 fi
 
 # Install system packages
@@ -60,13 +60,19 @@ install_packages "${FONTS[@]}"
 # Start and enable system services
 echo "Configuring services..."
 for service in "${SERVICES[@]}"; do
-    if ! systemctl is-enabled "$service" &> /dev/null; then
-        echo "Enabling $service..."
-        sudo systemctl enable --now "$service"
-    else
-        echo "$service is already enabled"
-    fi
+  if ! systemctl is-enabled "$service" &>/dev/null; then
+    echo "Enabling $service..."
+    sudo systemctl enable --now "$service"
+  else
+    echo "$service is already enabled"
+  fi
 done
+
+echo "Rebuilding man pages database..."
+sudo mandb --create --quiet --noconfirm
+
+echo "Enabling ufw on startup..."
+sudo ufw enable --noconfirm
 
 # Retrieve latest mirror list
 echo "Retrieving latest mirror list..."
