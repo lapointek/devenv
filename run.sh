@@ -69,10 +69,13 @@ for service in "${SERVICES[@]}"; do
 done
 
 echo "Rebuilding man pages database..."
-sudo mandb --create --quiet --noconfirm
+sudo mandb --create --quiet
+
+echo "Rebuilding tldr pages..."
+tldr -u
 
 echo "Enabling ufw on startup..."
-sudo ufw enable --noconfirm
+sudo ufw enable
 
 # Retrieve latest mirror list
 echo "Retrieving latest mirror list..."
