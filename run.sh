@@ -71,9 +71,6 @@ done
 echo "Rebuilding man pages database..."
 sudo mandb --create --quiet
 
-echo "Rebuilding tldr pages..."
-tldr -u
-
 echo "Enabling ufw on startup..."
 sudo ufw enable
 
